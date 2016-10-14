@@ -1731,7 +1731,7 @@ def check_P4Register(self, symbols, header_fields, objects, types = None):
 
     if self.layout:
         p4_type = self.layout.check_ts(symbols, header_fields, objects)
-        if p4_type is not None and p4_type.type_ == Types.header_type:
+        if p4_type is None or p4_type.type_ != Types.header_type:
             error_msg = "Error in register %s defined in file %s at line %d:"\
                         " layout attribute needs to refer to header type"\
                         % (self.name, self.filename, self.lineno)

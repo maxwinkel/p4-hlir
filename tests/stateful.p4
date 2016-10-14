@@ -1,12 +1,12 @@
 #include "includes/headers.p4"
 #include "includes/parser.p4"
 
-action hop(ttl, egress_spec) {
-    add_to_field(ttl, -1);
-    modify_field(standard_metadata.egress_spec, egress_spec, 0xFFFFFFFF);
+action hop(bit<8> ttl, bit<8> egress_spec) {
+    	modify_field(ttl, ttl - 1);
+	modify_field(standard_metadata.egress_spec, egress_spec, 0xFFFFFFFF);
 }
 
-action hop_ipv4(egress_spec) {
+action hop_ipv4(bit<8> egress_spec) {
     hop(ipv4.ttl, egress_spec);
 }
 
@@ -50,7 +50,7 @@ register reg1 {
     instance_count : 100;
     attributes : saturating, signed;
 }
-
+ 
 register reg2 {
     layout : ipv4_t;
     direct : ipv4_routing;
